@@ -48,14 +48,15 @@
 
 <table class = 'table'>
   <tr>
-    <td class = "col-sm-5"><%= link_to t('.new', :default => t("helpers.links.new")),
-                new_product_path,
-                :class => 'btn btn-primary' %></td>
+    <td class = "col-sm-5"><%= link_to t('.new', :default => t("helpers.links.new")), new_product_path, :class => 'btn btn-primary' %></td>
     <td class = "col-sm-offset-4 col-sm-7"><%= paginate @products %></td>
-
     <td class = "col-sm-4">
           <%= link_to 'send mail', send_mail_path, :class => 'btn btn-primary sending' %>
     </td>
+  </tr>
+  <tr>
+    <%= link_to 'Download as excel', products_path(format: :xlsx) %><br>
+    <%= link_to 'Download Pdf Report', download_pdf_path(format: 'pdf') %>
   </tr>
 </table>
 
@@ -79,3 +80,4 @@ $(document).ready(function () {
 });
 
 </script>
+

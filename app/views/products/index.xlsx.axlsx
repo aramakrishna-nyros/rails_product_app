@@ -1,0 +1,12 @@
+
+wb = xlsx_package.workbook
+wb.styles do |style|
+  highlight_cell = style.add_style(bg_color: "EFC376", border: Axlsx::STYLE_THIN_BORDER,               alignment: { horizontal: :center })
+  highlight_cell_center = style.add_style(alignment: { horizontal: :center })
+
+  wb.add_worksheet(name: "Products") do |sheet|
+    @products.each do |product|
+	      sheet.add_row [product.product_id, product.title, product.price, product.quantity, product.vat, product.totol_price, product.image], style: [highlight_cell_center,highlight_cell_center,highlight_cell_center,highlight_cell_center,highlight_cell_center,highlight_cell]
+    end
+  end
+end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     root 'products#index'
     
     get 'send_mail' => 'products#send_mail'
-
+    get 'download_pdf' => 'products#download_pdf'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

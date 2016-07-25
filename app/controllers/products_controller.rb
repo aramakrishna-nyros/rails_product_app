@@ -3,6 +3,13 @@ before_action :set_product, only: [:show, :edit, :update, :destroy]
 
 	def index
 		@products = Product.all.page(params[:page]).per(3)
+		respond_to do |format|
+		    format.html
+		    format.xlsx do
+				response.headers['Content-Disposition'] = 'attachment; filename="all_products.xlsx"'
+				# render xlsx: 'products', template: 'my/template', filename: "my_products.xlsx", disposition: 'inline', xlsx_created_at: 3.days.ago, xlsx_author: "Rk"
+			end
+		end
 	end
 
 	def show
@@ -18,15 +25,16 @@ before_action :set_product, only: [:show, :edit, :update, :destroy]
 	end
 
 	def send_mail
-		
-		# puts "---------------------------------#{@requiredproduct}"
-		# @requiredproduct = "#{@product.id}"
-		# puts @requiredproduct
-		# @product = Product.where(:id => 52 )
 		@product = Product.all
 		SendingMailer.new_mail(@product).deliver_now		
 	end
 
+	def download_pdf
+		html = render_to_string(template: 'products/download_pdf.pdf.erb')
+		pdf = PDFKit.new(html)
+		send_data pdf.to_pdf, filename: "datareport.pdf", type: "application/pdf", disposition: "inline"
+	end
+	
 	def create
 		@product = Product.new(product_params)
 
